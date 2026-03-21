@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Josiah Graphics</title>
+  <meta name="description" content="Graphic design services — brand identity, logo design, print, packaging, digital, illustration, and more." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Services Grid ────────────────────────────────────── */
+    .services-main-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+    }
+    .service-card {
+      padding: 2.8rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      transition: background var(--trans);
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width 0.5s var(--ease-out);
+    }
+    .service-card:hover::before { width: 100%; }
+    .service-card:hover { background: var(--surface-2); }
+    .service-num {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--text-faint);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      transition: color var(--trans);
+    }
+    .service-card:hover .service-num { color: var(--accent); }
+    .service-icon {
+      width: 52px; height: 52px;
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      transition: border-color var(--trans), background var(--trans);
+    }
+    .service-card:hover .service-icon {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .service-icon svg { width: 22px; height: 22px; stroke: var(--text-muted); stroke-width: 1.5; fill: none; }
+    .service-card:hover .service-icon svg { stroke: var(--accent); }
+    .service-name {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .service-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
+    }
+    .service-includes {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.75rem;
+    }
+    .service-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .service-tag {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid var(--border-light);
+      color: var(--text-muted);
+      transition: all var(--trans);
+    }
+    .service-card:hover .service-tag {
+      border-color: rgba(201,150,58,0.3);
+      color: var(--accent-light);
+    }
+    @media (max-width: 768px) {
+      .services-main-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Process ─────────────────────────────────────────── */
+    .process-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      margin-top: 4rem;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: var(--border-light);
+      z-index: 0;
+    }
+    .process-step {
+      padding: 0 1.5rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .step-dot {
+      width: 56px; height: 56px;
+      border: 1px solid var(--border-light);
+      border-radius: 50%;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: all var(--trans);
+    }
+    .process-step:hover .step-dot {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .step-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .step-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    @media (max-width: 900px) {
+      .process-steps { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+      .process-steps::before { display: none; }
+    }
+    @media (max-width: 600px) {
+      .process-steps { grid-template-columns: 1fr; }
+    }
+
+    /* ── Pricing Hint ────────────────────────────────────── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .pricing-card {
+      padding: 2.5rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      position: relative;
+      transition: border-color var(--trans), transform var(--trans);
+    }
+    .pricing-card.featured {
+      border-color: var(--accent);
+      background: var(--surface-2);
+    }
+    .pricing-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .pricing-badge {
+      position: absolute;
+      top: -1px; right: 2rem;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+    }
+    .pricing-tier {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .pricing-name {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .pricing-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem; }
+    .pricing-items { border-top: 1px solid var(--border); padding-top: 1.5rem; }
+    .pricing-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding: 0.4rem 0;
+    }
+    .pricing-item::before {
+      content: '✓';
+      color: var(--accent);
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+    @media (max-width: 768px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="page-loader"><span class="loader-logo">Josiah Graphics</span></div>
+  <div id="scroll-progress"></div>
+  <div class="cursor"></div>
+  <div class="cursor-ring"></div>
+
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Josiah <span>Graphics</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html" class="nav-cta">Get in Touch</a>
+      </div>
+      <button class="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="section-label page-hero-label">What I Offer</div>
+      <h1>Design<br>services that<br><em>move</em> you</h1>
+      <p class="page-hero-desc">From a single logo to a complete brand system — I offer thoughtful, strategic graphic design for businesses that take their visual identity seriously.</p>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="section-pad">
+    <div class="container">
+      <div class="section-label reveal">Core Services</div>
+      <h2 class="section-title reveal">What I <em>design</em></h2>
+      <div class="services-main-grid mt-3">
+
+        <div class="service-card reveal">
+          <p class="service-num">01</p>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          </div>
+          <h3 class="service-name">Brand Identity &amp; Logo Design</h3>
+          <p class="service-desc">The foundation of everything visual. I create distinctive logos and comprehensive brand identity systems that communicate who you are before you say a word. Includes logo design, colour palette, typography system, and brand guidelines.</p>
+          <p class="service-includes">Includes:</p>
+          <div class="service-list">
+            <span class="service-tag">Logo Suite</span>
+            <span class="service-tag">Brand Guidelines</span>
+            <span class="service-tag">Colour System</span>
+            <span class="service-tag">Typography</span>
+            <span class="service-tag">Icon Set</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal">
+          <p class="service-num">02</p>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <h3 class="service-name">Print &amp; Publication Design</h3>
+          <p class="service-desc">From business cards to full-scale annual reports — I design print materials that hold their own in the physical world. Pixel-precision layouts prepared print-ready for any production standard.</p>
+          <p class="service-includes">Includes:</p>
+          <div class="service-list">
+            <span class="service-tag">Business Cards</span>
+            <span class="service-tag">Brochures</span>
+            <span class="service-tag">Flyers</span>
+            <span class="service-tag">Magazines</span>
+            <span class="service-tag">Annual Reports</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal">
+          <p class="service-num">03</p>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <h3 class="service-name">Packaging Design</h3>
+          <p class="service-desc">Packaging is the first physical touchpoint between your product and your customer. I design packaging that tells your story, stands out on shelf, and builds instant trust.</p>
+          <p class="service-includes">Includes:</p>
+          <div class="service-list">
+            <span class="service-tag">Product Labels</span>
+            <span class="service-tag">Box Dielines</span>
+            <span class="service-tag">Mockup Visuals</span>
+            <span class="service-tag">Print-Ready Files</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal">
+          <p class="service-num">04</p>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+          </div>
+          <h3 class="service-name">Digital &amp; Social Media Graphics</h3>
+          <p class="service-desc">Scroll-stopping content designed for digital audiences. I create cohesive social media templates, digital ads, and online brand kits that keep your visual identity consistent across all platforms.</p>
+          <p class="service-includes">Includes:</p>
+          <div class="service-list">
+            <span class="service-tag">Social Templates</span>
+            <span class="service-tag">Story Designs</span>
+            <span class="service-tag">Digital Ads</span>
+            <span class="service-tag">Email Headers</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal">
+          <p class="service-num">05</p>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+          </div>
+          <h3 class="service-name">Illustration &amp; Typography</h3>
+          <p class="service-desc">Custom illustration and bespoke lettering designed to give your brand a uniquely human touch. From editorial illustrations to hand-crafted logotypes, I create visual art that no stock library can replicate.</p>
+          <p class="service-includes">Includes:</p>
+          <div class="service-list">
+            <span class="service-tag">Custom Lettering</span>
+            <span class="service-tag">Editorial Art</span>
+            <span class="service-tag">Character Design</span>
+            <span class="service-tag">Patterns</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal">
+          <p class="service-num">06</p>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          </div>
+          <h3 class="service-name">Motion &amp; Presentation Design</h3>
+          <p class="service-desc">Brand animations, animated logos, and pitch decks that present your story with the same visual quality as your static assets. Because great brands move too.</p>
+          <p class="service-includes">Includes:</p>
+          <div class="service-list">
+            <span class="service-tag">Logo Animation</span>
+            <span class="service-tag">Pitch Decks</span>
+            <span class="service-tag">Slide Templates</span>
+            <span class="service-tag">GIF Assets</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="process-section section-pad">
+    <div class="container">
+      <div class="section-label reveal">How I Work</div>
+      <h2 class="section-title reveal">The design <em>process</em></h2>
+      <p class="section-sub reveal mt-1">Every project follows a clear, collaborative process — no black boxes, no surprises. You'll know exactly where we are at every step.</p>
+      <div class="process-steps">
+        <div class="process-step reveal">
+          <div class="step-dot">1</div>
+          <h4 class="step-name">Discovery</h4>
+          <p class="step-desc">Deep dive into your brand, audience, competitors, and goals through a structured brief session.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-dot">2</div>
+          <h4 class="step-name">Research</h4>
+          <p class="step-desc">Market research, mood boarding, and visual direction — building the strategic foundation for design decisions.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-dot">3</div>
+          <h4 class="step-name">Concept</h4>
+          <p class="step-desc">Initial design explorations presented with rationale — usually 2–3 directions for you to evaluate and feedback on.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-dot">4</div>
+          <h4 class="step-name">Refinement</h4>
+          <p class="step-desc">Iterating on the chosen direction with your feedback until the design is precisely right.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-dot">5</div>
+          <h4 class="step-name">Delivery</h4>
+          <p class="step-desc">Final files handed over in all required formats, with guidelines for consistent use going forward.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Packages -->
+  <section class="section-pad">
+    <div class="container">
+      <div class="section-label reveal">Investment</div>
+      <h2 class="section-title reveal">Project <em>packages</em></h2>
+      <p class="section-sub reveal mt-1 mb-3">Every project is scoped uniquely. The packages below are starting points — contact me for a tailored quote.</p>
+      <div class="pricing-grid">
+        <div class="pricing-card reveal">
+          <p class="pricing-tier">Starter</p>
+          <p class="pricing-name">Essentials</p>
+          <p class="pricing-desc">Perfect for individuals and micro-businesses needing a clean, professional visual identity quickly.</p>
+          <div class="pricing-items">
+            <div class="pricing-item">Logo design (primary + alternate)</div>
+            <div class="pricing-item">Colour palette (3–4 colours)</div>
+            <div class="pricing-item">Font recommendations</div>
+            <div class="pricing-item">2 revision rounds</div>
+            <div class="pricing-item">Print + digital file formats</div>
+          </div>
+          <a href="contact.html" class="btn btn-outline mt-3" style="width:100%; justify-content:center;">Get a Quote</a>
+        </div>
+        <div class="pricing-card featured reveal">
+          <div class="pricing-badge">Most Popular</div>
+          <p class="pricing-tier">Standard</p>
+          <p class="pricing-name">Brand System</p>
+          <p class="pricing-desc">Full brand identity for growing businesses that want a complete, consistent visual language across all touchpoints.</p>
+          <div class="pricing-items">
+            <div class="pricing-item">Everything in Essentials</div>
+            <div class="pricing-item">Full brand guidelines document</div>
+            <div class="pricing-item">Business card design</div>
+            <div class="pricing-item">Social media templates (6 formats)</div>
+            <div class="pricing-item">Letterhead &amp; email signature</div>
+            <div class="pricing-item">3 revision rounds</div>
+          </div>
+          <a href="contact.html" class="btn btn-primary mt-3" style="width:100%; justify-content:center;">Get a Quote</a>
+        </div>
+        <div class="pricing-card reveal">
+          <p class="pricing-tier">Premium</p>
+          <p class="pricing-name">Full Identity</p>
+          <p class="pricing-desc">End-to-end brand identity creation for established businesses ready to own their category.</p>
+          <div class="pricing-items">
+            <div class="pricing-item">Everything in Brand System</div>
+            <div class="pricing-item">Packaging design (1 SKU)</div>
+            <div class="pricing-item">Marketing collateral suite</div>
+            <div class="pricing-item">Animated logo intro</div>
+            <div class="pricing-item">Pitch deck template</div>
+            <div class="pricing-item">Unlimited revisions</div>
+          </div>
+          <a href="contact.html" class="btn btn-outline mt-3" style="width:100%; justify-content:center;">Get a Quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-pad" style="background:var(--surface); border-top:1px solid var(--border); text-align:center;">
+    <div class="container" style="position:relative;z-index:1;">
+      <h2 class="section-title reveal" style="max-width:16ch; margin:0 auto 1.5rem;">Not sure what you<br>need? <em>Let's talk.</em></h2>
+      <p class="section-sub reveal" style="margin: 0 auto 2.5rem; text-align:center;">A 30-minute discovery call is free. No commitments, no sales pressure — just a conversation about your project.</p>
+      <a href="contact.html" class="btn btn-primary reveal">Book a Free Call →</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">Josiah <span>Graphics</span></a>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-link">Ig</a>
+        <a href="#" class="social-link">Be</a>
+        <a href="#" class="social-link">Li</a>
+        <a href="#" class="social-link">X</a>
+      </div>
+      <p class="footer-copy">© 2025 Josiah Graphics. Designed &amp; built with intention.</p>
+    </div>
+  </footer>
+
+  <button id="back-top">↑</button>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Josiah Graphics</title>
+  <meta name="description" content="About Josiah — graphic designer, visual storyteller, and brand strategist with 8+ years of creative experience." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Bio Section ─────────────────────────────────────── */
+    .bio-grid {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: clamp(3rem, 8vw, 6rem);
+      align-items: start;
+    }
+    .bio-img-wrap {
+      position: relative;
+      top: -2rem;
+    }
+    .bio-img-wrap img {
+      width: 100%;
+      aspect-ratio: 3/4;
+    }
+    .bio-img-overlay {
+      position: absolute;
+      top: 2rem; right: -2rem;
+      width: calc(100% - 2rem);
+      height: calc(100% - 2rem);
+      border: 1px solid var(--border-light);
+      pointer-events: none;
+      z-index: -1;
+    }
+    .bio-img-caption {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+    .bio-text p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+    .bio-text p.lead {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--text);
+    }
+    .bio-text p.lead em { color: var(--accent); font-style: italic; }
+    @media (max-width: 768px) {
+      .bio-grid { grid-template-columns: 1fr; }
+      .bio-img-wrap { top: 0; }
+      .bio-img-overlay { display: none; }
+    }
+
+    /* ── Skills Section ──────────────────────────────────── */
+    .skills-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .skill-col {
+      padding: 2.5rem;
+      border-right: 1px solid var(--border);
+    }
+    .skill-col:last-child { border-right: none; }
+    .skill-col-title {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .skill-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .skill-item:last-child { border-bottom: none; }
+    .skill-item strong { color: var(--text); font-weight: 400; }
+    .skill-bar-wrap {
+      width: 60px;
+      height: 2px;
+      background: var(--border-light);
+      border-radius: 1px;
+      overflow: hidden;
+    }
+    .skill-bar {
+      height: 100%;
+      background: var(--accent);
+      width: 0;
+      transition: width 1s var(--ease-out);
+      border-radius: 1px;
+    }
+    .skill-bar.animated { width: var(--level); }
+    @media (max-width: 768px) {
+      .skills-grid { grid-template-columns: 1fr; }
+      .skill-col { border-right: none; border-bottom: 1px solid var(--border); }
+      .skill-col:last-child { border-bottom: none; }
+    }
+
+    /* ── Timeline ────────────────────────────────────────── */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6rem;
+      bottom: 0;
+      width: 1px;
+      background: var(--border-light);
+    }
+    .timeline-item {
+      position: relative;
+      padding-left: 2rem;
+      padding-bottom: 2.5rem;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -2.5rem;
+      top: 0.4rem;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      box-shadow: 0 0 0 4px var(--bg);
+    }
+    .timeline-year {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-role {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .timeline-company { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+    .timeline-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.8; max-width: 52ch; }
+
+    /* ── Values ──────────────────────────────────────────── */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    .value-card {
+      padding: 2.2rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: border-color var(--trans), background var(--trans);
+    }
+    .value-card:hover { border-color: var(--accent); background: var(--surface-2); }
+    .value-icon {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 600;
+      font-style: italic;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+    .value-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    .value-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.8; }
+    @media (max-width: 640px) {
+      .values-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Stats Bar ───────────────────────────────────────── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-cell {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .stat-cell:last-child { border-right: none; }
+    @media (max-width: 768px) {
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .stat-cell:nth-child(2) { border-right: none; }
+      .stat-cell:nth-child(1),
+      .stat-cell:nth-child(2) { border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="page-loader"><span class="loader-logo">Josiah Graphics</span></div>
+  <div id="scroll-progress"></div>
+  <div class="cursor"></div>
+  <div class="cursor-ring"></div>
+
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Josiah <span>Graphics</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html" class="nav-cta">Get in Touch</a>
+      </div>
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="section-label page-hero-label">About Me</div>
+      <h1>The<br>person<br>behind the <em>work</em></h1>
+      <p class="page-hero-desc">
+        I'm Josiah — graphic designer, visual thinker, and brand storyteller based in [City, Country]. I design for people, not just portfolios.
+      </p>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-cell reveal">
+      <p class="stat-number" data-count="8" data-suffix="+">0+</p>
+      <p class="stat-label">Years Active</p>
+    </div>
+    <div class="stat-cell reveal">
+      <p class="stat-number" data-count="150" data-suffix="+">0+</p>
+      <p class="stat-label">Projects Delivered</p>
+    </div>
+    <div class="stat-cell reveal">
+      <p class="stat-number" data-count="80" data-suffix="+">0+</p>
+      <p class="stat-label">Happy Clients</p>
+    </div>
+    <div class="stat-cell reveal">
+      <p class="stat-number" data-count="12" data-suffix="">0</p>
+      <p class="stat-label">Design Awards</p>
+    </div>
+  </div>
+
+  <!-- Bio -->
+  <section class="section-pad">
+    <div class="container">
+      <div class="bio-grid">
+        <div class="bio-img-wrap reveal-left">
+          <img src="https://picsum.photos/seed/josiah-bio/600/800" alt="Josiah at work" loading="lazy" />
+          <div class="bio-img-overlay"></div>
+          <p class="bio-img-caption">→ Josiah · Visual Designer · [City]</p>
+        </div>
+        <div class="bio-text reveal-right">
+          <div class="section-label">My Story</div>
+          <p class="lead">
+            Design isn't decoration — it's <em>communication</em> stripped to its purest, most powerful form.
+          </p>
+          <p>
+            My journey into design began with a sketch pad and a curiosity about why certain logos felt trustworthy and others felt forgettable. That question has driven every project I've taken on since.
+          </p>
+          <p>
+            I studied Graphic Communication at [University Name] and have since spent over eight years working across industries — from startups that needed a visual voice from scratch, to established firms seeking a fresh identity to match their evolution.
+          </p>
+          <p>
+            I founded Josiah Graphics as a studio where strategy and artistry meet without compromise. Every client gets a designer who listens, a process that's transparent, and a result that exceeds expectation.
+          </p>
+          <p>
+            When I'm not designing, you'll find me exploring typography history, mentoring young creatives, or chasing good light with a camera.
+          </p>
+          <a href="contact.html" class="btn btn-primary mt-3">Let's Work Together →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="section-pad" style="background: var(--surface); border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-label reveal">What I Believe</div>
+      <h2 class="section-title reveal">Design <em>principles</em></h2>
+      <div class="values-grid mt-3">
+        <div class="value-card reveal">
+          <div class="value-icon">01.</div>
+          <h3 class="value-title">Clarity Above All</h3>
+          <p class="value-desc">The best design communicates instantly. I strip away everything that doesn't serve the message, leaving only what earns its place on the canvas.</p>
+        </div>
+        <div class="value-card reveal">
+          <div class="value-icon">02.</div>
+          <h3 class="value-title">Intent in Every Detail</h3>
+          <p class="value-desc">Kerning, colour temperature, weight contrast — nothing is arbitrary. Every micro-decision compounds into a macro impression that defines the brand.</p>
+        </div>
+        <div class="value-card reveal">
+          <div class="value-icon">03.</div>
+          <h3 class="value-title">Strategy Before Style</h3>
+          <p class="value-desc">Beautiful design that doesn't work is decoration. I start with your audience, your goals, and your competitive landscape — then I make it beautiful.</p>
+        </div>
+        <div class="value-card reveal">
+          <div class="value-icon">04.</div>
+          <h3 class="value-title">Long-term Thinking</h3>
+          <p class="value-desc">Trends age. Strong visual identities don't. I design for longevity, building systems flexible enough to grow with your brand over years, not seasons.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="skills-section">
+    <div class="container">
+      <div style="padding: 4rem 0 3rem;">
+        <div class="section-label reveal">Expertise</div>
+        <h2 class="section-title reveal">Skills &amp; <em>tools</em></h2>
+      </div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-col reveal">
+        <p class="skill-col-title">Design Disciplines</p>
+        <div class="skill-item"><strong>Brand Identity</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:95%"></div></div></div>
+        <div class="skill-item"><strong>Typography</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:92%"></div></div></div>
+        <div class="skill-item"><strong>Print Design</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:88%"></div></div></div>
+        <div class="skill-item"><strong>Illustration</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:80%"></div></div></div>
+        <div class="skill-item"><strong>Packaging</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:85%"></div></div></div>
+      </div>
+      <div class="skill-col reveal">
+        <p class="skill-col-title">Software & Tools</p>
+        <div class="skill-item"><strong>Adobe Illustrator</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:98%"></div></div></div>
+        <div class="skill-item"><strong>Adobe Photoshop</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:95%"></div></div></div>
+        <div class="skill-item"><strong>Adobe InDesign</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:90%"></div></div></div>
+        <div class="skill-item"><strong>Figma</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:85%"></div></div></div>
+        <div class="skill-item"><strong>Procreate</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:78%"></div></div></div>
+      </div>
+      <div class="skill-col reveal">
+        <p class="skill-col-title">Additional Expertise</p>
+        <div class="skill-item"><strong>Brand Strategy</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:82%"></div></div></div>
+        <div class="skill-item"><strong>Motion Graphics</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:72%"></div></div></div>
+        <div class="skill-item"><strong>Social Media Design</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:90%"></div></div></div>
+        <div class="skill-item"><strong>Colour Theory</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:96%"></div></div></div>
+        <div class="skill-item"><strong>Client Communication</strong><div class="skill-bar-wrap"><div class="skill-bar" style="--level:93%"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Timeline -->
+  <section class="section-pad">
+    <div class="container">
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,6rem); align-items:start;">
+        <div class="reveal-left">
+          <div class="section-label">Work History</div>
+          <h2 class="section-title">Creative <em>journey</em></h2>
+          <p class="section-sub mt-1">
+            Over eight years of shaping brands across continents, industries, and mediums — each chapter teaching me something new about the power of visual language.
+          </p>
+        </div>
+        <div class="timeline reveal-right">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <p class="timeline-year">2020 — Present</p>
+            <p class="timeline-role">Founder &amp; Lead Designer</p>
+            <p class="timeline-company">Josiah Graphics Studio</p>
+            <p class="timeline-desc">Running a full-service design studio serving local and international clients across brand identity, print, and digital design.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <p class="timeline-year">2017 — 2020</p>
+            <p class="timeline-role">Senior Graphic Designer</p>
+            <p class="timeline-company">[Agency Name] · [City]</p>
+            <p class="timeline-desc">Led design for a portfolio of regional consumer brands. Managed a team of two junior designers and interfaced directly with clients.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <p class="timeline-year">2014 — 2017</p>
+            <p class="timeline-role">Junior Graphic Designer</p>
+            <p class="timeline-company">[Studio Name] · [City]</p>
+            <p class="timeline-desc">Developed brand collateral, print layouts, and editorial designs. Built a strong foundation in production-ready print work.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <p class="timeline-year">2014</p>
+            <p class="timeline-role">BA Graphic Communication</p>
+            <p class="timeline-company">[University Name]</p>
+            <p class="timeline-desc">Graduated with honours. Dissertation focused on the semiotics of visual branding in emerging markets.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-pad" style="background:var(--surface); border-top:1px solid var(--border); text-align:center;">
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="section-label reveal" style="justify-content:center;">Ready?</div>
+      <h2 class="section-title reveal" style="max-width:14ch; margin:0 auto 1.5rem;">Let's make something <em>great</em></h2>
+      <a href="contact.html" class="btn btn-primary reveal">Start a Project →</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">Josiah <span>Graphics</span></a>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-link">Ig</a>
+        <a href="#" class="social-link">Be</a>
+        <a href="#" class="social-link">Li</a>
+        <a href="#" class="social-link">X</a>
+      </div>
+      <p class="footer-copy">© 2025 Josiah Graphics. Designed &amp; built with intention.</p>
+    </div>
+  </footer>
+
+  <button id="back-top">↑</button>
+
+  <script src="main.js"></script>
+  <script>
+    // Animate skill bars when visible
+    const skillBars = document.querySelectorAll('.skill-bar');
+    const barIO = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated');
+          barIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    skillBars.forEach(b => barIO.observe(b));
+  </script>
+</body>
+</html>

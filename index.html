@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Josiah Graphics — Visual Design Studio</title>
+  <meta name="description" content="Josiah Graphics — A creative visual design studio specialising in brand identity, print, and digital design." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Hero ─────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: var(--nav-h);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-bg-circle {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+    }
+    .hero-bg-circle-1 {
+      width: 600px; height: 600px;
+      background: rgba(201,150,58,0.08);
+      top: -200px; right: -100px;
+    }
+    .hero-bg-circle-2 {
+      width: 400px; height: 400px;
+      background: rgba(201,150,58,0.05);
+      bottom: -100px; left: 10%;
+    }
+    .hero-grid-line {
+      position: absolute;
+      background: var(--border);
+      pointer-events: none;
+    }
+    .hero-grid-v {
+      width: 1px; height: 100%;
+      top: 0;
+    }
+    .hero-grid-v:nth-child(1) { left: 25%; }
+    .hero-grid-v:nth-child(2) { left: 50%; }
+    .hero-grid-v:nth-child(3) { left: 75%; }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 6rem clamp(1.5rem, 5vw, 4rem);
+      max-width: var(--max-w);
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-intro {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s var(--ease-out) forwards;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 12vw, 10rem);
+      font-weight: 600;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s var(--ease-out) forwards;
+    }
+    .hero-title .line-2 {
+      display: block;
+      padding-left: clamp(3rem, 12vw, 10rem);
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-sub {
+      max-width: 46ch;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.7s var(--ease-out) forwards;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.9s var(--ease-out) forwards;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      z-index: 1;
+      opacity: 0;
+      animation: fadeUp 0.8s 1.3s var(--ease-out) forwards;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { transform: scaleY(1); opacity: 1; }
+      50%       { transform: scaleY(0.5); opacity: 0.4; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Marquee ──────────────────────────────────────────── */
+    .marquee-section {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1.4rem 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 3rem;
+      animation: marquee 28s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .marquee-item::after {
+      content: '✦';
+      color: var(--accent);
+      font-style: normal;
+      font-size: 0.6rem;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── Selected Works ───────────────────────────────────── */
+    .works-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+    }
+    .work-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      transition: border-color var(--trans);
+      cursor: pointer;
+    }
+    .work-card:hover { border-color: var(--accent); }
+    .work-card-1 { grid-column: span 7; }
+    .work-card-2 { grid-column: span 5; }
+    .work-card-3 { grid-column: span 5; }
+    .work-card-4 { grid-column: span 7; }
+    .work-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+    .work-card-1 .work-img,
+    .work-card-4 .work-img { aspect-ratio: 16/9; }
+    .work-img img {
+      width: 100%; height: 100%;
+      transition: transform 0.7s var(--ease-out);
+    }
+    .work-card:hover .work-img img { transform: scale(1.06); }
+    .work-info {
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .work-num {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+    .work-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+    .work-cat {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    .work-arrow {
+      width: 38px; height: 38px;
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 1rem;
+      transition: all var(--trans);
+      flex-shrink: 0;
+    }
+    .work-card:hover .work-arrow {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    @media (max-width: 900px) {
+      .work-card-1, .work-card-2,
+      .work-card-3, .work-card-4 { grid-column: span 12; }
+    }
+
+    /* ── Services Preview ─────────────────────────────────── */
+    .services-preview {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .services-preview-inner {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: var(--gap);
+      align-items: center;
+    }
+    .services-list-inline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .service-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: color var(--trans);
+    }
+    .service-row:last-child { border-bottom: none; }
+    .service-row:hover { color: var(--accent); }
+    .service-row-name {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+    .service-row-num {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+    }
+    @media (max-width: 768px) {
+      .services-preview-inner { grid-template-columns: 1fr; }
+    }
+
+    /* ── About Teaser ─────────────────────────────────────── */
+    .about-teaser {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 8vw, 6rem);
+      align-items: center;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-wrap img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      filter: grayscale(20%);
+    }
+    .about-img-badge {
+      position: absolute;
+      bottom: -1.5rem;
+      right: -1.5rem;
+      width: 130px; height: 130px;
+      background: var(--accent);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .about-img-badge strong {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--bg);
+      line-height: 1;
+    }
+    .about-img-badge span {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(7,7,10,0.7);
+      margin-top: 0.2rem;
+    }
+    @media (max-width: 768px) {
+      .about-teaser { grid-template-columns: 1fr; }
+      .about-img-badge { bottom: 1rem; right: 1rem; }
+    }
+
+    /* ── CTA Section ──────────────────────────────────────── */
+    .cta-section {
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(ellipse, rgba(201,150,58,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-large {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 7vw, 6rem);
+      font-weight: 600;
+      line-height: 1.05;
+      max-width: 18ch;
+      margin: 0 auto 2.5rem;
+    }
+    .cta-large em {
+      font-style: italic;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loader -->
+  <div id="page-loader"><span class="loader-logo">Josiah Graphics</span></div>
+
+  <!-- Scroll Progress -->
+  <div id="scroll-progress"></div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- Navigation -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Josiah <span>Graphics</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html" class="nav-cta">Get in Touch</a>
+      </div>
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-bg-circle hero-bg-circle-1"></div>
+      <div class="hero-bg-circle hero-bg-circle-2"></div>
+      <div class="hero-grid-line hero-grid-v"></div>
+      <div class="hero-grid-line hero-grid-v"></div>
+      <div class="hero-grid-line hero-grid-v"></div>
+    </div>
+    <div class="hero-content hero-parallax">
+      <p class="hero-intro">Creative Visual Studio · Est. 2018</p>
+      <h1 class="hero-title">
+        Josiah
+        <span class="line-2">Graphics</span>
+      </h1>
+      <p class="hero-sub">
+        Crafting purposeful, memorable visual identities that speak before words do. From brand strategy to pixel-perfect print — we design with intention.
+      </p>
+      <div class="hero-actions">
+        <a href="portfolio.html" class="btn btn-primary">View Portfolio &nbsp;→</a>
+        <a href="about.html" class="btn btn-outline">About the Studio</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <span class="marquee-item">Brand Identity</span>
+      <span class="marquee-item">Logo Design</span>
+      <span class="marquee-item">Print Media</span>
+      <span class="marquee-item">Packaging Design</span>
+      <span class="marquee-item">Digital Illustration</span>
+      <span class="marquee-item">Social Media Kits</span>
+      <span class="marquee-item">Typography</span>
+      <span class="marquee-item">Motion Graphics</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="marquee-item">Brand Identity</span>
+      <span class="marquee-item">Logo Design</span>
+      <span class="marquee-item">Print Media</span>
+      <span class="marquee-item">Packaging Design</span>
+      <span class="marquee-item">Digital Illustration</span>
+      <span class="marquee-item">Social Media Kits</span>
+      <span class="marquee-item">Typography</span>
+      <span class="marquee-item">Motion Graphics</span>
+    </div>
+  </div>
+
+  <!-- Selected Works -->
+  <section class="section-pad">
+    <div class="container">
+      <div class="works-header">
+        <div>
+          <div class="section-label reveal">Selected Works</div>
+          <h2 class="section-title reveal">Work that <em>speaks</em></h2>
+        </div>
+        <a href="portfolio.html" class="btn btn-ghost reveal">See full portfolio</a>
+      </div>
+
+      <div class="works-grid">
+        <a href="portfolio.html" class="work-card work-card-1 reveal">
+          <div class="work-img">
+            <img src="https://picsum.photos/seed/jg01/900/500" alt="Brand Identity Project" loading="lazy" />
+          </div>
+          <div class="work-info">
+            <div class="work-meta">
+              <p class="work-num">01</p>
+              <p class="work-title">Aurelius Brand Identity</p>
+              <p class="work-cat">Branding &amp; Logo Design</p>
+            </div>
+            <div class="work-arrow">→</div>
+          </div>
+        </a>
+        <a href="portfolio.html" class="work-card work-card-2 reveal">
+          <div class="work-img">
+            <img src="https://picsum.photos/seed/jg02/600/450" alt="Packaging Design" loading="lazy" />
+          </div>
+          <div class="work-info">
+            <div class="work-meta">
+              <p class="work-num">02</p>
+              <p class="work-title">Bloom Packaging</p>
+              <p class="work-cat">Packaging &amp; Print</p>
+            </div>
+            <div class="work-arrow">→</div>
+          </div>
+        </a>
+        <a href="portfolio.html" class="work-card work-card-3 reveal">
+          <div class="work-img">
+            <img src="https://picsum.photos/seed/jg03/600/450" alt="Digital Illustration" loading="lazy" />
+          </div>
+          <div class="work-info">
+            <div class="work-meta">
+              <p class="work-num">03</p>
+              <p class="work-title">NovaSky Illustration</p>
+              <p class="work-cat">Digital Illustration</p>
+            </div>
+            <div class="work-arrow">→</div>
+          </div>
+        </a>
+        <a href="portfolio.html" class="work-card work-card-4 reveal">
+          <div class="work-img">
+            <img src="https://picsum.photos/seed/jg04/900/500" alt="Social Media Design" loading="lazy" />
+          </div>
+          <div class="work-info">
+            <div class="work-meta">
+              <p class="work-num">04</p>
+              <p class="work-title">Kira Collective Social Kit</p>
+              <p class="work-cat">Social Media &amp; Digital</p>
+            </div>
+            <div class="work-arrow">→</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Preview -->
+  <section class="services-preview section-pad">
+    <div class="container">
+      <div class="services-preview-inner">
+        <div>
+          <div class="section-label reveal">What I Do</div>
+          <h2 class="section-title reveal">Design<br><em>services</em></h2>
+          <p class="section-sub reveal mt-2">Every project begins with a conversation and ends with a design that works as hard as your business does.</p>
+          <a href="services.html" class="btn btn-outline mt-3 reveal">Explore Services</a>
+        </div>
+        <div class="services-list-inline">
+          <div class="service-row reveal">
+            <span class="service-row-name">Brand Identity &amp; Logo</span>
+            <span class="service-row-num">01</span>
+          </div>
+          <div class="service-row reveal">
+            <span class="service-row-name">Print &amp; Publication Design</span>
+            <span class="service-row-num">02</span>
+          </div>
+          <div class="service-row reveal">
+            <span class="service-row-name">Packaging Design</span>
+            <span class="service-row-num">03</span>
+          </div>
+          <div class="service-row reveal">
+            <span class="service-row-name">Digital &amp; Social Media Graphics</span>
+            <span class="service-row-num">04</span>
+          </div>
+          <div class="service-row reveal">
+            <span class="service-row-name">Illustration &amp; Typography</span>
+            <span class="service-row-num">05</span>
+          </div>
+          <div class="service-row reveal">
+            <span class="service-row-name">Motion &amp; Presentation Design</span>
+            <span class="service-row-num">06</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Teaser -->
+  <section class="section-pad">
+    <div class="container">
+      <div class="about-teaser">
+        <div class="about-img-wrap reveal-left">
+          <img src="https://picsum.photos/seed/josiah-portrait/600/800" alt="Josiah — Designer" loading="lazy" />
+          <div class="about-img-badge">
+            <strong>8+</strong>
+            <span>Years<br>Experience</span>
+          </div>
+        </div>
+        <div class="reveal-right">
+          <div class="section-label">About the Studio</div>
+          <h2 class="section-title">Design with <em>soul</em></h2>
+          <p class="section-sub mt-1">
+            I'm Josiah — a graphic designer who believes that great design isn't just seen, it's felt. Every stroke, every colour choice, every typeface carries intent.
+          </p>
+          <p class="text-muted mt-2" style="font-size:0.95rem; line-height:1.85;">
+            With over eight years of experience working with brands across Africa and beyond, I bring strategy and artistry together to create visuals that don't just look good — they convert, connect, and leave lasting impressions.
+          </p>
+          <div class="flex gap-2 mt-3" style="flex-wrap:wrap;">
+            <div>
+              <p class="stat-number" data-count="150" data-suffix="+">0+</p>
+              <p class="stat-label">Projects Completed</p>
+            </div>
+            <div>
+              <p class="stat-number" data-count="80" data-suffix="+">0+</p>
+              <p class="stat-label">Happy Clients</p>
+            </div>
+            <div>
+              <p class="stat-number" data-count="12" data-suffix="">0</p>
+              <p class="stat-label">Industry Awards</p>
+            </div>
+          </div>
+          <a href="about.html" class="btn btn-outline mt-3">More About Me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-pad cta-section">
+    <div class="container" style="text-align:center; position:relative; z-index:1;">
+      <div class="section-label reveal" style="justify-content:center;">Let's Work Together</div>
+      <h2 class="cta-large reveal">
+        Have a project in <em>mind?</em>
+      </h2>
+      <p class="section-sub reveal" style="margin:0 auto 2.5rem; text-align:center;">
+        Whether you're building a brand from scratch or refreshing an existing one — let's create something remarkable together.
+      </p>
+      <a href="contact.html" class="btn btn-primary reveal">Start a Conversation →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">Josiah <span>Graphics</span></a>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-link" aria-label="Instagram">Ig</a>
+        <a href="#" class="social-link" aria-label="Behance">Be</a>
+        <a href="#" class="social-link" aria-label="LinkedIn">Li</a>
+        <a href="#" class="social-link" aria-label="Twitter/X">X</a>
+      </div>
+      <p class="footer-copy">© 2025 Josiah Graphics. Designed &amp; built with intention.</p>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button id="back-top" aria-label="Back to top">↑</button>
+
+  <script src="main.js"></script>
+</body>
+</html>

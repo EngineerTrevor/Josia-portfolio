@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Josiah Graphics</title>
+  <meta name="description" content="Get in touch with Josiah Graphics — let's discuss your next design project." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Contact Layout ───────────────────────────────────── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: clamp(3rem, 8vw, 6rem);
+      align-items: start;
+    }
+    @media (max-width: 800px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Contact Info ─────────────────────────────────────── */
+    .contact-info-block {
+      position: sticky;
+      top: calc(var(--nav-h) + 2rem);
+    }
+    .contact-item {
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-item:first-child { border-top: 1px solid var(--border); }
+    .contact-item-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+    .contact-item-value {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: color var(--trans);
+    }
+    .contact-item-value a:hover { color: var(--accent); }
+    .contact-item-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    /* Availability Badge */
+    .availability {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 1.2rem;
+      border: 1px solid rgba(74, 185, 100, 0.3);
+      background: rgba(74, 185, 100, 0.06);
+      margin-bottom: 2.5rem;
+    }
+    .availability-dot {
+      width: 8px; height: 8px;
+      background: #4ab964;
+      border-radius: 50%;
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+    .availability span {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #4ab964;
+    }
+
+    /* Social Links Row */
+    .social-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+    }
+    .social-row .social-link {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border-light);
+      color: var(--text-muted);
+      transition: all var(--trans);
+    }
+    .social-row .social-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    /* ── Form ─────────────────────────────────────────────── */
+    .contact-form-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: clamp(2rem, 5vw, 3.5rem);
+    }
+    .form-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .form-title em { font-style: italic; color: var(--accent); }
+    .form-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 500px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 1.1rem;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background var(--trans), transform var(--trans);
+      margin-top: 0.5rem;
+    }
+    .submit-btn:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+    }
+
+    /* ── FAQ / Quick Info ─────────────────────────────────── */
+    .faq-list { margin-top: 4rem; border-top: 1px solid var(--border); }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .faq-trigger {
+      width: 100%;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.3rem 0;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: color var(--trans);
+    }
+    .faq-trigger:hover { color: var(--accent); }
+    .faq-icon {
+      font-size: 1.2rem;
+      color: var(--accent);
+      transition: transform 0.3s var(--ease-out);
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s var(--ease-out), padding 0.4s;
+    }
+    .faq-item.open .faq-body { max-height: 200px; }
+    .faq-body p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      padding-bottom: 1.3rem;
+    }
+
+    /* ── Map Placeholder ──────────────────────────────────── */
+    .map-placeholder {
+      width: 100%;
+      height: 320px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-top: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .map-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg, var(--border) 0, var(--border) 1px, transparent 1px, transparent 48px),
+        repeating-linear-gradient(90deg, var(--border) 0, var(--border) 1px, transparent 1px, transparent 48px);
+      opacity: 0.4;
+    }
+    .map-pin {
+      width: 44px; height: 44px;
+      background: var(--accent);
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      position: relative;
+      z-index: 1;
+    }
+    .map-pin::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px; height: 14px;
+      background: var(--bg);
+      border-radius: 50%;
+    }
+    .map-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="page-loader"><span class="loader-logo">Josiah Graphics</span></div>
+  <div id="scroll-progress"></div>
+  <div class="cursor"></div>
+  <div class="cursor-ring"></div>
+
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Josiah <span>Graphics</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html" class="nav-cta">Get in Touch</a>
+      </div>
+      <button class="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="section-label page-hero-label">Get in Touch</div>
+      <h1>Let's create<br>something<br><em>together</em></h1>
+      <p class="page-hero-desc">
+        Whether you have a fully formed brief or just a spark of an idea — reach out. Every great project starts with a conversation.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Body -->
+  <section class="section-pad">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Info Column -->
+        <div class="contact-info-block reveal-left">
+          <div class="availability">
+            <div class="availability-dot"></div>
+            <span>Available for new projects</span>
+          </div>
+
+          <div class="contact-item">
+            <p class="contact-item-label">Email</p>
+            <p class="contact-item-value"><a href="mailto:hello@josiahgraphics.com">hello@josiahgraphics.com</a></p>
+            <p class="contact-item-sub">Usually replies within 24 hours</p>
+          </div>
+
+          <div class="contact-item">
+            <p class="contact-item-label">Phone / WhatsApp</p>
+            <p class="contact-item-value"><a href="tel:+265000000000">+265 000 000 000</a></p>
+            <p class="contact-item-sub">Mon – Fri, 8am – 6pm (CAT)</p>
+          </div>
+
+          <div class="contact-item">
+            <p class="contact-item-label">Location</p>
+            <p class="contact-item-value">Blantyre, Malawi</p>
+            <p class="contact-item-sub">Available for remote work worldwide</p>
+          </div>
+
+          <div class="contact-item">
+            <p class="contact-item-label">Response Time</p>
+            <p class="contact-item-value">Within 24 hours</p>
+            <p class="contact-item-sub">Project kick-off typically within 1–2 weeks</p>
+          </div>
+
+          <div class="social-row">
+            <a href="#" class="social-link">Instagram</a>
+            <a href="#" class="social-link">Behance</a>
+            <a href="#" class="social-link">LinkedIn</a>
+          </div>
+
+          <!-- Map Placeholder -->
+          <div class="map-placeholder">
+            <div class="map-pin"></div>
+            <span class="map-label">Blantyre, Malawi</span>
+          </div>
+        </div>
+
+        <!-- Form Column -->
+        <div class="reveal-right">
+          <div class="contact-form-wrap">
+            <h2 class="form-title">Send a <em>message</em></h2>
+            <p class="form-subtitle">Fill in the form below and I'll get back to you within one business day. The more detail you provide, the better I can prepare for our conversation.</p>
+
+            <form id="contact-form" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="fname">First Name</label>
+                  <input class="form-input" type="text" id="fname" name="fname" placeholder="John" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="lname">Last Name</label>
+                  <input class="form-input" type="text" id="lname" name="lname" placeholder="Doe" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="email">Email Address</label>
+                <input class="form-input" type="email" id="email" name="email" placeholder="you@company.com" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="company">Company / Brand</label>
+                <input class="form-input" type="text" id="company" name="company" placeholder="Your company name (optional)" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="service">Service Needed</label>
+                <select class="form-select" id="service" name="service">
+                  <option value="" disabled selected>Select a service…</option>
+                  <option value="branding">Brand Identity &amp; Logo Design</option>
+                  <option value="print">Print &amp; Publication Design</option>
+                  <option value="packaging">Packaging Design</option>
+                  <option value="digital">Digital &amp; Social Media Graphics</option>
+                  <option value="illustration">Illustration &amp; Typography</option>
+                  <option value="motion">Motion &amp; Presentation Design</option>
+                  <option value="other">Other / Not Sure Yet</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="budget">Estimated Budget</label>
+                <select class="form-select" id="budget" name="budget">
+                  <option value="" disabled selected>Select a range…</option>
+                  <option>Under $300</option>
+                  <option>$300 – $700</option>
+                  <option>$700 – $1,500</option>
+                  <option>$1,500 – $3,000</option>
+                  <option>$3,000+</option>
+                  <option>Not sure yet — let's discuss</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="message">Tell Me About Your Project</label>
+                <textarea class="form-textarea" id="message" name="message" rows="5" placeholder="Describe your project, goals, timeline, and anything else that will help me understand what you need…" required></textarea>
+              </div>
+
+              <button type="submit" class="submit-btn">Send Message →</button>
+            </form>
+          </div>
+
+          <!-- FAQ -->
+          <div class="faq-list">
+            <h3 class="section-title" style="font-size:1.6rem; margin: 2.5rem 0 0;">Common <em>questions</em></h3>
+
+            <div class="faq-item">
+              <button class="faq-trigger">How long does a branding project take? <span class="faq-icon">+</span></button>
+              <div class="faq-body"><p>A typical logo + brand identity project takes 2–4 weeks from kick-off to final delivery, depending on the scope and revision cycles. Rush timelines can be accommodated for an additional fee.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-trigger">Do you work with clients outside Malawi? <span class="faq-icon">+</span></button>
+              <div class="faq-body"><p>Absolutely. The majority of my clients are remote. I collaborate effectively via email, video call, and shared project documents. Distance is no barrier to great design.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-trigger">What file formats will I receive? <span class="faq-icon">+</span></button>
+              <div class="faq-body"><p>You'll receive all necessary formats — vector source files (AI, EPS, SVG), print-ready PDFs, and web-optimised PNG/JPG files. For brand packages, a full guidelines PDF is included.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-trigger">How many revisions are included? <span class="faq-icon">+</span></button>
+              <div class="faq-body"><p>Revision rounds depend on the package — typically 2–3 rounds are included. I find this is almost always enough because the process starts with thorough discovery, reducing surprises.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-trigger">What's your payment process? <span class="faq-icon">+</span></button>
+              <div class="faq-body"><p>I typically work with a 50% deposit upfront and 50% on project completion. For larger projects, milestone-based payment schedules can be arranged.</p></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">Josiah <span>Graphics</span></a>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-link">Ig</a>
+        <a href="#" class="social-link">Be</a>
+        <a href="#" class="social-link">Li</a>
+        <a href="#" class="social-link">X</a>
+      </div>
+      <p class="footer-copy">© 2025 Josiah Graphics. Designed &amp; built with intention.</p>
+    </div>
+  </footer>
+
+  <button id="back-top">↑</button>
+
+  <script src="main.js"></script>
+  <script>
+    // FAQ accordion
+    document.querySelectorAll('.faq-trigger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html>

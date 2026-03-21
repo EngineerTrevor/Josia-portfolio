@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Josiah Graphics</title>
+  <meta name="description" content="Selected design work by Josiah Graphics — brand identities, packaging, print, digital, and illustration projects." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Filter Bar ───────────────────────────────────────── */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .filter-btn {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.55rem 1.2rem;
+      border: 1px solid var(--border-light);
+      color: var(--text-muted);
+      background: none;
+      cursor: pointer;
+      transition: all var(--trans);
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    /* ── Portfolio Grid ───────────────────────────────────── */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      transition: border-color var(--trans), transform var(--trans), opacity 0.35s, transform 0.35s;
+    }
+    .portfolio-item:hover { border-color: var(--accent); }
+
+    /* Featured (large) items */
+    .portfolio-item.featured { grid-column: span 2; }
+    .portfolio-item.tall { grid-row: span 2; }
+
+    .portfolio-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      position: relative;
+    }
+    .portfolio-item.featured .portfolio-img { aspect-ratio: 16/9; }
+    .portfolio-item.tall .portfolio-img { aspect-ratio: 3/5; }
+
+    .portfolio-img img {
+      width: 100%; height: 100%;
+      transition: transform 0.7s var(--ease-out);
+    }
+    .portfolio-item:hover .portfolio-img img { transform: scale(1.06); }
+
+    /* Overlay */
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(7,7,10,0.92) 0%, rgba(7,7,10,0.3) 50%, transparent 100%);
+      opacity: 0;
+      transition: opacity var(--trans);
+      display: flex;
+      align-items: flex-end;
+      padding: 1.8rem;
+    }
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+    .portfolio-overlay-content { transform: translateY(10px); transition: transform var(--trans); }
+    .portfolio-item:hover .portfolio-overlay-content { transform: translateY(0); }
+    .overlay-cat {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .overlay-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .overlay-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* Info below image */
+    .portfolio-info {
+      padding: 1.3rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .portfolio-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .portfolio-cat {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      margin-top: 0.15rem;
+    }
+    .portfolio-arrow {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      transition: color var(--trans), transform var(--trans);
+    }
+    .portfolio-item:hover .portfolio-arrow {
+      color: var(--accent);
+      transform: translateX(3px);
+    }
+
+    @media (max-width: 900px) {
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .portfolio-item.featured { grid-column: span 2; }
+      .portfolio-item.tall { grid-row: span 1; }
+    }
+    @media (max-width: 600px) {
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .portfolio-item.featured { grid-column: span 1; }
+    }
+
+    /* ── Clients ──────────────────────────────────────────── */
+    .clients-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+    }
+    .client-cell {
+      padding: 2rem;
+      border-right: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: grayscale(1) opacity(0.4);
+      transition: filter var(--trans);
+    }
+    .client-cell:last-child { border-right: none; }
+    .client-cell:hover { filter: none; }
+    .client-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      font-style: italic;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
+    @media (max-width: 768px) {
+      .clients-grid { grid-template-columns: repeat(3, 1fr); }
+      .client-cell:nth-child(3n) { border-right: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="page-loader"><span class="loader-logo">Josiah Graphics</span></div>
+  <div id="scroll-progress"></div>
+  <div class="cursor"></div>
+  <div class="cursor-ring"></div>
+
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Josiah <span>Graphics</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html" class="nav-cta">Get in Touch</a>
+      </div>
+      <button class="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="section-label page-hero-label">My Work</div>
+      <h1>Selected<br><em>portfolio</em></h1>
+      <p class="page-hero-desc">A curated selection of design projects spanning brand identity, packaging, print, illustration, and digital media.</p>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section class="section-pad">
+    <div class="container">
+      <!-- Filter -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All Work</button>
+        <button class="filter-btn" data-filter="branding">Brand Identity</button>
+        <button class="filter-btn" data-filter="print">Print</button>
+        <button class="filter-btn" data-filter="packaging">Packaging</button>
+        <button class="filter-btn" data-filter="digital">Digital</button>
+        <button class="filter-btn" data-filter="illustration">Illustration</button>
+      </div>
+
+      <!-- Grid -->
+      <div class="portfolio-grid">
+
+        <!-- 1 — Featured Branding -->
+        <a href="#" class="portfolio-item featured reveal" data-category="branding">
+          <div class="portfolio-img">
+            <img src="https://picsum.photos/seed/pf01/900/506" alt="Aurelius Brand Identity" loading="lazy" />
+            <div class="portfolio-overlay">
+              <div class="portfolio-overlay-content">
+                <p class="overlay-cat">Brand Identity</p>
+                <p class="overlay-title">Aurelius Brand Identity</p>
+                <span class="overlay-arrow">View Project →</span>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div>
+              <p class="portfolio-name">Aurelius Brand Identity</p>
+              <p class="portfolio-cat">Brand Identity · 2024</p>
+            </div>
+            <span class="portfolio-arrow">→</span>
+          </div>
+        </a>
+
+        <!-- 2 — Tall Packaging -->
+        <a href="#" class="portfolio-item tall reveal" data-category="packaging">
+          <div class="portfolio-img">
+            <img src="https://picsum.photos/seed/pf02/500/833" alt="Bloom Wellness Packaging" loading="lazy" />
+            <div class="portfolio-overlay">
+              <div class="portfolio-overlay-content">
+                <p class="overlay-cat">Packaging</p>
+                <p class="overlay-title">Bloom Wellness Packaging</p>
+                <span class="overlay-arrow">View Project →</span>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div>
+              <p class="portfolio-name">Bloom Wellness Packaging</p>
+              <p class="portfolio-cat">Packaging · 2024</p>
+            </div>
+            <span class="portfolio-arrow">→</span>
+          </div>
+        </a>
+
+        <!-- 3 -->
+        <a href="#" class="portfolio-item reveal" data-category="print">
+          <div class="portfolio-img">
+            <img src="https://picsum.photos/seed/pf03/600/450" alt="Meridian Annual Report" loading="lazy" />
+            <div class="portfolio-overlay">
+              <div class="portfolio-overlay-content">
+                <p class="overlay-cat">Print Design</p>
+                <p class="overlay-title">Meridian Annual Report</p>
+                <span class="overlay-arrow">View Project →</span>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div>
+              <p class="portfolio-name">Meridian Annual Report</p>
+              <p class="portfolio-cat">Print Design · 2023</p>
+            </div>
+            <span class="portfolio-arrow">→</span>
+          </div>
+        </a>
+
+        <!-- 4 -->
+        <a href="#" class="portfolio-item reveal" data-category="branding">
+          <div class="portfolio-img">
+            <img src="https://picsum.photos/seed/pf04/600/450" alt="Stone & Rye Restaurant Brand" loading="lazy" />
+            <div class="portfolio-overlay">
+              <div class="portfolio-overlay-content">
+                <p class="overlay-cat">Brand Identity</p>
+                <p class="overlay-title">Stone &amp; Rye Restaurant</p>
+                <span class="overlay-arrow">View Project →</span>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div>
+              <p class="portfolio-name">Stone &amp; Rye Restaurant</p>
+              <p class="portfolio-cat">Brand Identity · 2023</p>
+            </div>
+            <span class="portfolio-arrow">→</span>
+          </div>
+        </a>
+
+        <!-- 5 — Featured Digital -->
+        <a href="#" class="portfolio-item featured reveal" data-category="digital">
+          <div class="portfolio-img">
+            <img src="https://picsum.photos/seed/pf05/900/506" alt="Kira Collective Social Kit" loading="lazy" />
+            <div class="portfolio-overlay">
+              <div class="portfolio-overlay-content">
+                <p class="overlay-cat">Digital Design</p>
+                <p class="overlay-title">Kira Collective Social Kit</p>
+                <span class="overlay-arrow">View Project →</span>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div>
+              <p class="portfolio-name">Kira Collective Social Kit</p>
+              <p class="portfolio-cat">Digital Design · 2024</p>
+            </div>
+            <span class="portfolio-arrow">→</span>
+          </div>
+        </a>
+
+        <!-- 6 -->
+        <a href="#" class="portfolio-item reveal" data-category="illustration">
+          <div class="portfolio-img">
+            <img src="https://picsum.photos/seed/pf06/600/450" alt="NovaSky Editorial Illustration" loading="lazy" />
+            <div class="portfolio-overlay">
+              <div class="portfolio-overlay-content">
+                <p class="overlay-cat">Illustration</p>
+                <p class="overlay-title">NovaSky Editorial Series</p>
+                <span class="overlay-arrow">View Project →</span>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div>
+              <p class="portfolio-name">NovaSky Editorial Series</p>
+              <p class="portfolio-cat">Illustration · 2023</p>
+            </div>
+            <span class="portfolio-arrow">→</span>
+          </div>
+        </a>
+
+        <!-- 7 -->
+        <a href="#" class="portfolio-item reveal" data-category="packaging">
+          <div class="portfolio-img">
+            <img src="https://picsum.photos/seed/pf07/600/450" alt="Halo Coffee Packaging" loading="lazy" />
+            <div class="portfolio-overlay">
+              <div class="portfolio-overlay-content">
+                <p class="overlay-cat">Packaging</p>
+                <p class="overlay-title">Halo Coffee Packaging</p>
+                <span class="overlay-arrow">View Project →</span>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div>
+              <p class="portfolio-name">Halo Coffee Packaging</p>
+              <p class="portfolio-cat">Packaging · 2023</p>
+            </div>
+            <span class="portfolio-arrow">→</span>
+          </div>
+        </a>
+
+        <!-- 8 -->
+        <a href="#" class="portfolio-item reveal" data-category="print branding">
+          <div class="portfolio-img">
+            <img src="https://picsum.photos/seed/pf08/600/450" alt="Versant Law Firm Identity" loading="lazy" />
+            <div class="portfolio-overlay">
+              <div class="portfolio-overlay-content">
+                <p class="overlay-cat">Brand Identity &amp; Print</p>
+                <p class="overlay-title">Versant Law Firm Identity</p>
+                <span class="overlay-arrow">View Project →</span>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div>
+              <p class="portfolio-name">Versant Law Firm Identity</p>
+              <p class="portfolio-cat">Brand + Print · 2022</p>
+            </div>
+            <span class="portfolio-arrow">→</span>
+          </div>
+        </a>
+
+        <!-- 9 -->
+        <a href="#" class="portfolio-item reveal" data-category="digital illustration">
+          <div class="portfolio-img">
+            <img src="https://picsum.photos/seed/pf09/600/450" alt="Volta Music Poster Series" loading="lazy" />
+            <div class="portfolio-overlay">
+              <div class="portfolio-overlay-content">
+                <p class="overlay-cat">Illustration &amp; Digital</p>
+                <p class="overlay-title">Volta Music Poster Series</p>
+                <span class="overlay-arrow">View Project →</span>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div>
+              <p class="portfolio-name">Volta Music Poster Series</p>
+              <p class="portfolio-cat">Illustration · 2022</p>
+            </div>
+            <span class="portfolio-arrow">→</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Clients -->
+  <section class="clients-section section-pad">
+    <div class="container">
+      <div class="section-label reveal" style="justify-content:center;">Trusted By</div>
+      <h2 class="section-title reveal" style="text-align:center; max-width:none; margin-bottom:3rem;">Brands I've worked <em>with</em></h2>
+    </div>
+    <div class="clients-grid">
+      <div class="client-cell reveal"><p class="client-name">Aurelius<br>Group</p></div>
+      <div class="client-cell reveal"><p class="client-name">Bloom<br>Wellness</p></div>
+      <div class="client-cell reveal"><p class="client-name">Stone &amp;<br>Rye Co.</p></div>
+      <div class="client-cell reveal"><p class="client-name">NovaSky<br>Media</p></div>
+      <div class="client-cell reveal"><p class="client-name">Versant<br>Legal</p></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-pad" style="text-align:center;">
+    <div class="container" style="position:relative;z-index:1;">
+      <h2 class="section-title reveal" style="max-width:14ch; margin:0 auto 1.5rem;">Like what<br>you <em>see?</em></h2>
+      <p class="section-sub reveal" style="margin:0 auto 2.5rem; text-align:center;">Let's create your next great work together.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="contact.html" class="btn btn-primary reveal">Start a Project →</a>
+        <a href="services.html" class="btn btn-outline reveal">View Services</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">Josiah <span>Graphics</span></a>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-link">Ig</a>
+        <a href="#" class="social-link">Be</a>
+        <a href="#" class="social-link">Li</a>
+        <a href="#" class="social-link">X</a>
+      </div>
+      <p class="footer-copy">© 2025 Josiah Graphics. Designed &amp; built with intention.</p>
+    </div>
+  </footer>
+
+  <button id="back-top">↑</button>
+  <script src="main.js"></script>
+</body>
+</html>

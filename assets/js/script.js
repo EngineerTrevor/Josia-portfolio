@@ -258,4 +258,82 @@
     });
   });
 
+  /* ── Image Lightbox Popup ─────────────────────────────── */
+  function createLightbox() {
+    const lb = document.createElement('div');
+    lb.id = 'image-lightbox';
+    lb.innerHTML = `
+      <div class="lightbox-backdrop"></div>
+      <div class="lightbox-inner">
+        <button type="button" class="lightbox-close" aria-label="Close image view">×</button>
+        <img class="lightbox-img" src="" alt="" />
+        <p class="lightbox-caption"></p>
+      </div>
+    `;
+    document.body.appendChild(lb);
+
+    lb.querySelector('.lightbox-backdrop').addEventListener('click', () => lb.classList.remove('open'));
+    lb.querySelector('.lightbox-close').addEventListener('click', () => lb.classList.remove('open'));
+    return lb;
+  }
+
+  const lightbox = createLightbox();
+
+  function openLightbox(src, caption) {
+    const img = lightbox.querySelector('.lightbox-img');
+    const cap = lightbox.querySelector('.lightbox-caption');
+    img.src = src;
+    img.alt = caption || 'Project image';
+    cap.textContent = caption || '';
+    lightbox.classList.add('open');
+  }
+
+  function addLightboxHandlers(selector) {
+    document.querySelectorAll(selector).forEach(card => {
+      card.addEventListener('click', (e) => {
+        const target = e.target.closest(selector);
+        if (!target) return;
+
+        // prevent navigation to '#' links
+        if (e.target.closest('a')) {
+          e.preventDefault();
+        }
+
+        const imageEl = target.querySelector('img');
+        if (!imageEl) return;
+
+        let caption = '';
+        const titleEl = target.querySelector('.work-title, .overlay-title');
+        if (titleEl) caption = titleEl.textContent.trim();
+
+        openLightbox(imageEl.src, caption);
+      });
+    });
+  }
+
+  addLightboxHandlers('.work-card');
+  addLightboxHandlers('.portfolio-item');
+
+  // Close lightbox with Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      lightbox.classList.remove('open');
+    }
+  });
+
+  // Inject minimal lightbox styles
+  const lightboxStyles = document.createElement('style');
+  lightboxStyles.textContent = `
+    #image-lightbox { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 9999; }
+    #image-lightbox.open { display: flex; }
+    #image-lightbox .lightbox-backdrop { position: absolute; inset: 0; background: rgba(6,6,11,0.82); backdrop-filter: blur(4px); }
+    #image-lightbox .lightbox-inner { position: relative; max-width: min(95vw, 1000px); max-height: min(95vh, 90vh); background: rgba(10,10,12,0.95); border-radius: 10px; padding: 1rem; box-shadow: 0 20px 46px rgba(0,0,0,0.35); display: flex; flex-direction: column; align-items: center; }
+    #image-lightbox .lightbox-img { max-width: 100%; max-height: 75vh; object-fit: contain; border-radius: 8px; }
+    #image-lightbox .lightbox-caption { color: #fff; margin-top: 0.75rem; font-size: 0.95rem; text-align: center; line-height: 1.35; }
+    #image-lightbox .lightbox-close { position: absolute; top: 8px; right: 8px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(20,20,25,.75); color: #fff; font-size: 1.6rem; cursor: pointer; }
+    #image-lightbox .lightbox-close:hover { background: rgba(255,255,255,0.15); }
+  `;
+  document.head.appendChild(lightboxStyles);
+
+
 })();

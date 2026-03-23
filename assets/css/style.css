@@ -669,6 +669,9 @@ footer {
   .grid-3, .grid-2 { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .footer-inner { flex-direction: column; align-items: flex-start; }
+  .footer-links { flex-wrap: wrap; gap: 1rem; }
+  .footer-links a { font-size: 0.65rem; }
+  .footer-copy { font-size: 0.7rem; word-break: break-word; }
   .cursor, .cursor-ring { display: none; }
 }
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About|Josiah Graphics</title>
-  <meta name="description" content="About Josiah — graphic designer specializing in logo design, poster design, birthday posters, business posters, and banners." />
+  <meta name="description" content="About Josiah graphic designer specializing in logo design, poster design, birthday posters, business posters, and banners." />
   <link rel="stylesheet" href="assets/css/style.css" />
   <style>
     /* ── Bio Section ─────────────────────────────────────── */
@@ -155,6 +155,19 @@
     }
     .timeline-company { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem; }
     .timeline-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.8; max-width: 52ch; }
+
+    /* ── Work History Grid ────────────────────────────────── */
+    .work-history-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 8vw, 6rem);
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .work-history-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
     /* ── Values ──────────────────────────────────────────── */
     .values-grid {
@@ -372,7 +385,7 @@
   <!-- Experience Timeline -->
   <section class="section-pad">
     <div class="container">
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,6rem); align-items:start;">
+      <div class="work-history-grid">
         <div class="reveal-left">
           <div class="section-label">Work History</div>
           <h2 class="section-title">Creative <em>journey</em></h2>

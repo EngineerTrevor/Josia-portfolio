@@ -64,9 +64,16 @@
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 2rem;
+      margin-bottom: 0;
       opacity: 0;
       animation: fadeUp 0.8s 0.3s var(--ease-out) forwards;
+    }
+    .hero-intro-logo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(2rem, 5vw, 4rem);
+      margin-bottom: 2rem;
     }
     .hero-title {
       font-family: var(--font-display);
@@ -419,17 +426,26 @@
       <div class="hero-grid-line hero-grid-v"></div>
     </div>
     <div class="hero-content hero-parallax">
-      <p class="hero-intro">Creative Visual Studio · Est. 2024</p>
-      <h1 class="hero-title">
-        Josiah
-        <span class="line-2">Graphics</span>
-      </h1>
-      <p class="hero-sub">
-        Crafting distinctive visual identities through professional logo design, poster design, and custom banners. Every project delivers creativity and quality with intention.
-      </p>
-      <div class="hero-actions">
-        <a href="portfolio.html" class="btn btn-primary">View Portfolio &nbsp;→</a>
-        <a href="about.html" class="btn btn-outline">About the Studio</a>
+      <div class="hero-intro-logo">
+        <p class="hero-intro">Creative Visual Studio · Est. 2024</p>
+        <div class="page-hero-logo">
+          <img src="assets/images/LOGO.svg" alt="Josiah Graphics Logo">
+        </div>
+      </div>
+      <div class="hero-content-layout">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            Josiah
+            <span class="line-2">Graphics</span>
+          </h1>
+          <p class="hero-sub">
+            Crafting distinctive visual identities through professional logo design, poster design, and custom banners. Every project delivers creativity and quality with intention.
+          </p>
+          <div class="hero-actions">
+            <a href="portfolio.html" class="btn btn-primary">View Portfolio &nbsp;→</a>
+            <a href="about.html" class="btn btn-outline">About the Studio</a>
+          </div>
+        </div>
       </div>
     </div>
     <div class="hero-scroll">

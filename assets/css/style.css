@@ -168,6 +168,97 @@ body::before {
 .nav-logo span { color: var(--accent); }
 .nav-logo:hover { color: var(--accent); }
 
+.page-hero-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+.page-hero-text {
+  flex: 1;
+}
+
+.page-hero-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0;
+}
+
+.page-hero-logo img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 10px 40px rgba(201, 150, 58, 0.25);
+  border: 3px solid var(--accent);
+  animation: logoGlow 3s ease-in-out infinite;
+}
+
+@keyframes logoGlow {
+  0%, 100% {
+    box-shadow: 0 10px 40px rgba(201, 150, 58, 0.25);
+    border-color: var(--accent);
+  }
+  50% {
+    box-shadow: 0 10px 50px rgba(201, 150, 58, 0.6), 0 0 30px rgba(201, 150, 58, 0.4);
+    border-color: rgba(201, 150, 58, 0.9);
+  }
+}
+
+.hero-content-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(2rem, 8vw, 6rem);
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-text .hero-scroll {
+  position: static;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .page-hero-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .page-hero-logo img { 
+    width: 120px; 
+    height: 120px;
+    border-width: 2px;
+  }
+
+  .hero-content-layout {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-text .hero-title {
+    font-size: clamp(2rem, 8vw, 6rem) !important;
+  }
+
+  .page-hero-logo {
+    margin-top: 1.5rem;
+  }
+
+  .hero-intro-logo {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+}
+
 .nav-links {
   display: flex;
   align-items: center;
@@ -665,6 +756,7 @@ footer {
 @media (max-width: 768px) {
   .nav-links, .nav-cta { display: none; }
   .hamburger { display: flex; }
+  .nav-logo img { height: 40px; margin-right: 8px; border-radius: 50%; }
   .mobile-nav { display: flex; }
   .grid-3, .grid-2 { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }

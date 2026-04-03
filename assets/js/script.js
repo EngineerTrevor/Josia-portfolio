@@ -57,7 +57,41 @@
       nav.classList.remove('scrolled');
     }
   }
+  const themeButtons = document.querySelectorAll('#theme-toggle, #theme-toggle-mobile, #theme-toggle-footer');
 
+  function setTheme(theme) {
+    const light = theme === 'light';
+    document.body.classList.toggle('theme-light', light);
+    document.body.classList.toggle('theme-dark', !light);
+    localStorage.setItem('theme', theme);
+
+    themeButtons.forEach(btn => {
+      btn.textContent = light ? 'Dark' : 'Light';
+      btn.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
+    });
+  }
+
+  function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    const initialTheme = savedTheme || systemTheme;
+    setTheme(initialTheme);
+  }
+
+  themeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const newTheme = document.body.classList.contains('theme-light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  });
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+    if (!localStorage.getItem('theme')) {
+      setTheme(event.matches ? 'dark' : 'light');
+    }
+  });
+
+  initTheme();
   window.addEventListener('scroll', updateNav, { passive: true });
   updateNav();
 
